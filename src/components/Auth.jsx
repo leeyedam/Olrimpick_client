@@ -164,7 +164,7 @@ export default function Auth() {
   };
 
   const onSubmit = async (e) => {
-    const URL = "http://localhost:5000/auth";
+    const URL = "https://olrim-pick-first.vercel.app/auth";
     // const URL = 'https://medical-pager.herokuapp.com/auth';
 
     const {
