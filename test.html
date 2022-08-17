@@ -1,0 +1,25 @@
+<html>
+  <script src="https://cdn.jsdelivr.net/npm/getstream/dist/js_min/getstream.js"></script>
+  <script type="text/javascript">
+    const token = "YOUR-TOKEN-HERE";
+    const client = stream.connect("adazxgkkh3hb", null, "1201640");
+    const notificationScott = client.feed("notification", "scott", token);
+
+    function callback(data) {
+      alert("A new activity: " + JSON.stringify(data));
+    }
+
+    function successCallback() {
+      alert(
+        "Now listening to changes in realtime. Add an activity to see how realtime works."
+      );
+    }
+
+    function failCallback(data) {
+      alert("Something went wrong, check the console logs");
+      console.log(data);
+    }
+
+    notificationScott.subscribe(callback).then(successCallback, failCallback);
+  </script>
+</html>
