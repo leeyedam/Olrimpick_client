@@ -13,6 +13,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/userReducer";
 import { Badge } from "@mui/material";
+import Cookies from "universal-cookie";
+import { StreamChat } from "stream-chat";
+import { useEffect } from "react";
+import { useStreamContext } from "react-activity-feed";
+const cookies = new Cookies();
+
+const userId = cookies.get("userId");
 
 export default function ChatModal(userNumber) {
   const [state, setState] = React.useState({
@@ -77,6 +84,7 @@ export default function ChatModal(userNumber) {
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
+            sx={{ zIndex: 1300 }}
           >
             {list(anchor)}
             <Chatting setMsgNumber={setMsgNumber} />

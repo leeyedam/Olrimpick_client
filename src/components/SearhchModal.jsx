@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import FriendListContainer from "./FriendSearch";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -39,29 +40,47 @@ export default function SearhchModal() {
       >
         Search
       </Button>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
+      <ThemeProvider
+        theme={createTheme({
+          components: {
+            MuiListItemButton: {
+              defaultProps: {
+                disableTouchRipple: true,
+              },
+            },
+          },
+          palette: {
+            mode: "dark",
+            primary: { main: "rgb(102, 157, 246)" },
+            background: { paper: "#000" },
+          },
+        })}
       >
-        <AppBar sx={{ position: "relative", backgroundColor: "#2c2c30" }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Search
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <FriendListContainer />
-      </Dialog>
+        <Dialog
+          fullScreen
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar sx={{ position: "relative", backgroundColor: "#2c2c30" }}>
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                Search
+              </Typography>
+            </Toolbar>
+          </AppBar>
+
+          <FriendListContainer />
+        </Dialog>
+      </ThemeProvider>
     </div>
   );
 }

@@ -197,7 +197,12 @@ function MainFeed() {
             unfollow={unfollow}
           />
           <h3>{userName} 'Activity Feed</h3>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <Button
               id="basic-button"
               aria-controls={open ? "basic-menu" : undefined}

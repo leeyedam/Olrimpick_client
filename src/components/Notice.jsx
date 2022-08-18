@@ -55,7 +55,10 @@ export default function Notice({ alertNumber, followList }) {
     <div>
       {
         <React.Fragment>
-          <Button sx={{ padding: 0 }} onClick={toggleDrawer(anchor, true)}>
+          <Button
+            sx={{ padding: 0, minWidth: "27px" }}
+            onClick={toggleDrawer(anchor, true)}
+          >
             {alertNumber ? (
               <Badge badgeContent={alertNumber} color="primary">
                 <MailIcon color="action" />

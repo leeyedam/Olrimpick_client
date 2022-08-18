@@ -35,9 +35,6 @@ body {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
 }
-.css-h147x1-MuiButtonBase-root-MuiButton-root {
-  min-width: 27px !important;
-}
 .raf-comment-item {
   border-bottom: 0;
 }
@@ -223,7 +220,7 @@ h3 {
   display: flex;
   flex: 1;
   /* height: 800px; */
-  height: 100%;
+  height: fit-content;
   /* border-radius: 16px; */
   box-shadow: rgba(0, 0, 0, 0.33) 0px 1px 4px 0px;
 }
@@ -1877,7 +1874,8 @@ div.rta__autocomplete.str-chat__emojisearch {
 .raf-title,
 .raf-user-bar__username,
 .raf-user-bar__extra {
-  background-color: #2c2c30 !important;
+  /* background-color: #2c2c30 !important; */
+  background-color: #000 !important;
   color: #ffffff !important;
 }
 .raf-title,
@@ -1890,23 +1888,26 @@ div.rta__autocomplete.str-chat__emojisearch {
 .raf-comment-field__group .raf-button--primary,
 .raf-comment-field__group .raf-button--primary:disabled,
 .raf-comment-field__group .raf-button {
-  color: #87b7ff;
+  color: #ffffff;
   border: 0.2px solid #585858;
   border-left: #000000;
-  background-color: #2c2c30;
+  background-color: #000000;
   margin-right: 20px;
 }
 .raf-button--primary:disabled,
 .raf-button--primary {
-  color: #87b7ff;
-  border: 0.2px solid #585858;
-  background-color: #2c2c30;
+  color: #ffffff;
+
+  padding-right: 0;
+  margin-right: 0;
+  background-color: #000000;
 }
 .raf-panel-header {
-  border-bottom: 0.5px solid #f2f2f2;
+  border-top: 0.7px solid #494949;
+  border-bottom: 1px solid #000 !important;
 }
 .raf-activity-footer {
-  border-top: 0.3px solid #f2f2f2;
+  border-top: 0.3px solid #494949;
 }
 .raf-gallery {
   border: none;
@@ -1929,9 +1930,7 @@ div.rta__autocomplete.str-chat__emojisearch {
 .MuiButton-root svg {
   color: #fff;
 }
-/* .MuiList-root svg {
-  color: #ffffff;
-} */
+
 .listBox {
   display: flex;
   justify-content: left;
@@ -1944,13 +1943,7 @@ div.rta__autocomplete.str-chat__emojisearch {
   font-weight: bold;
   margin-left: -1rem;
 }
-.css-6hp17o-MuiList-root-MuiMenu-list {
-  background-color: #474747;
-}
 
-.css-1u2w381-MuiModal-root-MuiDrawer-root {
-  z-index: 1300 !important;
-}
 .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
   width: 100vw;
 }
@@ -1975,10 +1968,23 @@ div.rta__autocomplete.str-chat__emojisearch {
 .css-1faf27i-MuiButtonBase-root-MuiButton-root:hover {
   background-color: transparent !important;
 }
-.css-m9glnp-MuiPaper-root-MuiDialog-paper {
-  background-color: #000000 !important;
-}
+
 .css-10hburv-MuiTypography-root {
   color: #fff;
   font-weight: 900 !important;
+}
+.str-chat__input-flat .str-chat__textarea,
+.str-chat__input-flat .str-chat__textarea > textarea {
+  color: #2c2c30 !important;
+  background-color: #e3e3e3 !important;
+}
+.str-chat__textarea textarea:focus {
+  border: none !important;
+  box-shadow: none;
+}
+.str-chat__input-flat .rfu-file-upload-button svg {
+  fill: #585858;
+}
+.css-919eu4 {
+  background-color: rgba(0, 0, 0, 0.3);
 }

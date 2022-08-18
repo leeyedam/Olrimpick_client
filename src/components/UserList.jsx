@@ -103,10 +103,10 @@ const FriendSearchList = ({ user }) => {
       {loading ? (
         <div className="user-list__message">Loading users...</div>
       ) : (
-        <>
+        <div className="channel-search__results-header">
           <p className="user-list__message">{name}</p>
           <FollowButton onClick={followClick}>follow</FollowButton>
-        </>
+        </div>
       )}
     </ListContainer>
   );

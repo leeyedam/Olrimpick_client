@@ -30,7 +30,7 @@ const Container = styled.div`
     text-align: center;
     padding-bottom: 10px;
     margin-top: 0;
-    border-bottom: 1px solid rgb(79, 98, 148);
+    border-bottom: 1px solid #d6d6d6;
   }
 
   .form {
@@ -164,7 +164,7 @@ export default function Auth() {
   };
 
   const onSubmit = async (e) => {
-    const URL = "https://olrim-pick-first.vercel.app/auth";
+    const URL = "https://olrimpick.herokuapp.com/auth";
     // const URL = 'https://medical-pager.herokuapp.com/auth';
 
     const {

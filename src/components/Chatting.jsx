@@ -23,54 +23,24 @@ const client = StreamChat.getInstance(apiKey);
 
 const Chatting = ({ setMsgNumber }) => {
   const [channel, setChannel] = useState("");
-  const [preChannel, setPreChannel] = useState(false);
   const { user } = useSelector((state) => state);
   const friendNumber = user.currentUser?.userNumber;
 
   useEffect(() => {
     (async () => {
-      try {
-        const channelResponse = await client.queryChannels({
-          type: "messaging",
-          members: { $in: [userId] },
-        });
+      const channel = await client.channel("messaging", {
+        name: "Chatting Room",
+        members: [userId, friendNumber],
+      });
+      await channel.create();
+      const res = await channel.watch();
+      console.log(res);
+      res.read[0].user.id === userId
+        ? setMsgNumber(res.read[0].unread_messages)
+        : setMsgNumber(res.read[1].unread_messages);
 
-        const chatRoom = channelResponse.filter((c) =>
-          c.id.includes(friendNumber, userId)
-        );
-        if ((chatRoom.length = 1 && chatRoom[0].id === friendNumber + userId)) {
-          setPreChannel(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-      if (preChannel === true) {
-        const channel = await client.channel(
-          "messaging",
-          friendNumber + userId,
-          {
-            name: "Chatting Room",
-            members: [userId, friendNumber],
-          }
-        );
-
-        const res = await channel.watch();
-        setMsgNumber(res.read[1].unread_messages);
-        setChannel(channel);
-      } else {
-        const channel = await client.channel(
-          "messaging",
-          userId + friendNumber,
-          {
-            name: "Chatting Room",
-            members: [userId, friendNumber],
-          }
-        );
-        await channel.create();
-        const res = await channel.watch();
-        setMsgNumber(res.read[0].unread_messages);
-        setChannel(channel);
-      }
+      setChannel(channel);
+      // }
     })();
 
     return () => {
