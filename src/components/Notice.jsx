@@ -9,10 +9,12 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MailIcon from "@mui/icons-material/Mail";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AlertFeed from "./AlertFeed";
 import { Badge } from "@mui/material";
+import { useState } from "react";
+import client from "../client";
+import AlertFeedContainer from "../containers/AlertFeedContainer";
 
-export default function Notice({ alertNumber, followList }) {
+export default function Notice({ userId }) {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -30,6 +32,14 @@ export default function Notice({ alertNumber, followList }) {
 
     setState({ ...state, [anchor]: open });
   };
+  const [alertNumber, setAlertNumber] = useState(false);
+
+  const notificationFeed = client.feed("notification", userId);
+  notificationFeed.get().then((result) => {
+    result.results.length && setAlertNumber(result.results.length);
+  });
+
+  notificationFeed.subscribe().then();
 
   const list = (anchor) => (
     <Box
@@ -51,21 +61,53 @@ export default function Notice({ alertNumber, followList }) {
       <Divider />
     </Box>
   );
+
+  const rand1 = Math.random();
   return (
     <div>
       {
         <React.Fragment>
           <Button
-            sx={{ padding: 0, minWidth: "27px" }}
+            sx={{ padding: 0, minWidth: "27px", mt: "-2px" }}
             onClick={toggleDrawer(anchor, true)}
           >
             {alertNumber ? (
               <Badge badgeContent={alertNumber} color="primary">
-                <MailIcon color="action" />
+                <svg width={0} height={0}>
+                  <linearGradient
+                    id={`linearColors-${rand1}`}
+                    x1={0}
+                    y1={1}
+                    x2={1}
+                    y2={1}
+                  >
+                    <stop offset={0} stopColor=" rgba(234, 110, 110, 1)" />
+                    <stop offset={1} stopColor="rgba(147, 117, 254, 1)" />
+                  </linearGradient>
+                </svg>
+                <MailIcon
+                  color="action"
+                  sx={{ fill: `url(#linearColors-${rand1})` }}
+                />
               </Badge>
             ) : (
               <Badge color="primary">
-                <MailIcon color="action" />
+                <svg width={0} height={0}>
+                  <linearGradient
+                    id={`linearColors-${rand1}`}
+                    x1={0}
+                    y1={1}
+                    x2={1}
+                    y2={1}
+                  >
+                    <stop offset={0} stopColor=" rgba(234, 110, 110, 1)" />
+                    <stop offset={1} stopColor="rgba(147, 117, 254, 1)" />
+                  </linearGradient>
+                </svg>
+                <MailIcon
+                  color="action"
+                  sx={{ fill: `url(#linearColors-${rand1})` }}
+                />
               </Badge>
             )}
           </Button>
@@ -76,7 +118,7 @@ export default function Notice({ alertNumber, followList }) {
             onClose={toggleDrawer(anchor, false)}
           >
             {list(anchor)}
-            <AlertFeed followList={followList} />
+            <AlertFeedContainer />
           </Drawer>
         </React.Fragment>
       }

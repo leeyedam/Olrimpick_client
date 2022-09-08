@@ -110,7 +110,7 @@ export default function AboutApp() {
               </p>
             </ListItem>
             <ListItem sx={{ justifyContent: "left" }}>
-              <p style={{ color: "#fff", fontWeight: "bold" }}>How to use</p>
+              <p style={{ color: "#fff", fontWeight: "bold" }}>HOW TO USE</p>
             </ListItem>
             <Divider sx={{ borderColor: "#7f7f7f" }} />
             <ListItem>

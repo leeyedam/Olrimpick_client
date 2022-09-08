@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import styled from "styled-components";
+import { createTheme, LinearProgress, ThemeProvider } from "@mui/material";
+import TelegramIcon from "@mui/icons-material/Telegram";
 
 const Container = styled.div`
   body {
@@ -19,18 +21,18 @@ const Container = styled.div`
     left: 0;
     right: 0;
     max-width: 500px;
-    padding: 40px;
+    padding: 0 60px;
     margin: auto;
-    height: 500px;
+    height: 420px;
   }
 
   h1 {
-    font-weight: 300;
+    font-weight: 900;
+    font-size: 2.8em;
     color: white;
     text-align: center;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     margin-top: 0;
-    border-bottom: 1px solid #d6d6d6;
   }
 
   .form {
@@ -52,11 +54,17 @@ const Container = styled.div`
     display: block;
     box-sizing: border-box;
     width: 100%;
-    border-radius: 4px;
-    border: 1px solid white;
-    padding: 10px 15px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 15px 15px;
+    margin-bottom: 30px;
     font-size: 14px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+  }
+
+  input:focus {
+    outline: none;
   }
 
   label {
@@ -64,28 +72,34 @@ const Container = styled.div`
     text-align: left;
     display: block;
     margin-bottom: 9px;
-    margin-top: 20px;
+    margin-top: 15px;
     color: white;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   button[type="submit"],
   input[type="submit"] {
-    background: #ec5990;
+    background: linear-gradient(
+      198deg,
+      rgba(234, 110, 110, 1) 7%,
+      rgba(147, 117, 254, 1) 98%
+    );
     color: white;
     text-transform: uppercase;
     border: none;
     margin-top: 40px;
-    padding: 20px;
-    font-size: 16px;
-    font-weight: 200;
-    letter-spacing: 10px;
+    padding: 15px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 7px;
   }
 
   button[type="submit"]:hover,
   input[type="submit"]:hover {
-    background: #bf1650;
+    background: #9375fe;
+    color: #233a4e;
+    cursor: pointer;
   }
 
   button[type="submit"]:active,
@@ -135,18 +149,33 @@ const Container = styled.div`
     display: block;
     box-sizing: border-box;
     width: 100%;
-    border-radius: 4px;
+    border-radius: 45px;
     border: 1px solid white;
     padding: 10px 15px;
     margin-bottom: 10px;
     font-size: 14px;
   }
+  span {
+    margin-left: 4px;
+  }
 `;
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#9375fe",
+    },
+    secondary: {
+      main: "#233a4e",
+    },
+  },
+});
 
 const cookies = new Cookies();
 
 export default function Auth() {
   const [isSignup, setIsSignup] = useState(true);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -164,6 +193,7 @@ export default function Auth() {
   };
 
   const onSubmit = async (e) => {
+    setLoading(true);
     const URL = "https://olrimpick.herokuapp.com/auth";
     // const URL = 'https://medical-pager.herokuapp.com/auth';
 
@@ -198,72 +228,99 @@ export default function Auth() {
   const { username, password } = watch();
 
   return (
-    <Container>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>Olrim Pick</h1>
-        <label>Name</label>
-        <input
-          name="username"
-          type="text"
-          placeholder="name"
-          value={username}
-          onChange={(e) => handleChange(e, "username")}
-          {...register("username", {
-            required: true,
-            maxLength: 20,
-            minLength: 4,
-          })}
-        />
-        {errors.username?.type === "required" && (
-          <p style={{ fontSize: "14px" }}>필수 항목입니다.</p>
+    <>
+      <div
+        className="auth-bg"
+        style={{
+          width: "100vw",
+          height: "100vh",
+        }}
+      ></div>
+      <Container>
+        {loading ? (
+          <form>
+            <ThemeProvider theme={theme}>
+              <div style={{ marginTop: "180px", padding: "20px" }}>
+                <LinearProgress sx={{ height: "8px", borderRadius: "20px" }} />
+                <h3 style={{ color: "#fff", textAlign: "center" }}>
+                  Loading...
+                </h3>
+              </div>
+            </ThemeProvider>
+          </form>
+        ) : (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <h1>
+              Olrim Pick
+              <TelegramIcon
+                fontSize="medium"
+                sx={{
+                  verticalAlign: "top",
+                  marginLeft: "3px",
+                  marginTop: "-6px",
+                }}
+              />
+            </h1>
+            <input
+              name="username"
+              type="text"
+              placeholder="name"
+              value={username}
+              onChange={(e) => handleChange(e, "username")}
+              {...register("username", {
+                required: true,
+                maxLength: 20,
+                minLength: 4,
+              })}
+            />
+            {errors.username?.type === "required" && (
+              <p style={{ fontSize: "14px" }}>필수 항목입니다.</p>
+            )}
+            {errors.username?.type === "minLength" && (
+              <p style={{ fontSize: "14px" }}>4글자 이상 입력해 주세요.</p>
+            )}
+            <input
+              name="password"
+              type="password"
+              placeholder="password"
+              {...register("password", {
+                required: true,
+                maxLength: 12,
+                minLength: 6,
+              })}
+            />
+            {errors.password?.type === "required" && (
+              <p style={{ fontSize: "14px" }}>필수 항목입니다.</p>
+            )}
+            {errors.password?.type === "minLength" && (
+              <p style={{ fontSize: "14px" }}>6글자 이상 입력해 주세요.</p>
+            )}
+            <input
+              type="password"
+              placeholder="passwordCheck"
+              {...register("passwordCheck", {
+                validate: (value) => value === password,
+              })}
+            />
+            {errors.passwordCheck?.type === "validate" && (
+              <p style={{ fontSize: "14px" }}>패스워드와 일치하지 않습니다.</p>
+            )}
+            <button type="submit" disabled={isSubmitting}>
+              {isSignup ? "Sign Up" : "Login"}
+            </button>
+            <div className="auth__form-container_fields-account">
+              <p style={{ fontSize: "14px", color: "#fff" }}>
+                {isSignup
+                  ? "혹시 이미 가입된 아이디가 있으신가요? "
+                  : "아직 회원이 아니신가요?"}
+                <span onClick={switchMode}>
+                  {isSignup ? "Login" : "Sign Up"}
+                </span>
+              </p>
+            </div>
+          </form>
         )}
-        {errors.username?.type === "minLength" && (
-          <p style={{ fontSize: "14px" }}>4글자 이상 입력해 주세요.</p>
-        )}
-        <label>Password</label>
-        <input
-          name="password"
-          type="password"
-          placeholder="password"
-          {...register("password", {
-            required: true,
-            maxLength: 12,
-            minLength: 6,
-          })}
-        />
-        {errors.password?.type === "required" && (
-          <p style={{ fontSize: "14px" }}>필수 항목입니다.</p>
-        )}
-        {errors.password?.type === "minLength" && (
-          <p style={{ fontSize: "14px" }}>6글자 이상 입력해 주세요.</p>
-        )}
-        <label>Password Check</label>
-        <input
-          type="password"
-          placeholder="passwordCheck"
-          {...register("passwordCheck", {
-            validate: (value) => value === password,
-          })}
-        />
-        {errors.passwordCheck?.type === "validate" && (
-          <p style={{ fontSize: "14px" }}>패스워드와 일치하지 않습니다.</p>
-        )}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          style={{ backgroundColor: "#59b4ec" }}
-        >
-          {isSignup ? "Sign Up" : "Login"}
-        </button>
-        <div className="auth__form-container_fields-account">
-          <p style={{ fontSize: "14px" }}>
-            {isSignup
-              ? "혹시 이미 가입된 아이디가 있으신가요? "
-              : "아직 회원이 아니신가요?"}
-            <span onClick={switchMode}>{isSignup ? "Login" : "Sign Up"}</span>
-          </p>
-        </div>
-      </form>
-    </Container>
+      </Container>
+    </>
   );
 }

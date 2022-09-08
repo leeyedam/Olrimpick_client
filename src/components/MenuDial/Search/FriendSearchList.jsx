@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "getstream";
-import Cookies from "universal-cookie";
-import {
-  FollowButton,
-  useFeedContext,
-  useStreamContext,
-} from "react-activity-feed";
+import { Button } from "@mui/material";
+import useFeedClient from "../../../hooks/useFeedClient";
+import useFollowing from "../../../hooks/useFollowing";
 
 const ListContainer = ({ children }) => {
   return (
@@ -17,45 +13,13 @@ const ListContainer = ({ children }) => {
 };
 
 const FriendSearchList = ({ user }) => {
-  const cookies = new Cookies();
-
-  const apiKey = "adazxgkkh3hb";
-  const authToken = cookies.get("token");
-  const userId = cookies.get("userId");
-
-  const appId = "1201640";
-
-  const { client } = useStreamContext();
-  // const feed = useFeedContext();
-
-  // const client = connect(apiKey, authToken, appId);
+  const client = useFeedClient();
   const [users, setUsers] = useState([]);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [listEmpty, setListEmpty] = useState(false);
   const [error, setError] = useState(false);
-
-  const followClick = async () => {
-    if (!user) {
-      return;
-    }
-
-    try {
-      client.reactions.add(
-        "follow",
-        userId,
-        {},
-        { targetFeeds: [`notification:${users}`] }
-      );
-
-      const myFeed = client.feed("user", userId);
-      myFeed.follow("user", users);
-
-      await myFeed.following({ filter: [`user:${users}`] });
-
-      window.location.reload();
-    } catch (err) {}
-  };
+  const followClick = useFollowing;
 
   useEffect(() => {
     const getUsers = async () => {
@@ -103,9 +67,28 @@ const FriendSearchList = ({ user }) => {
       {loading ? (
         <div className="user-list__message">Loading users...</div>
       ) : (
-        <div className="channel-search__results-header">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <p className="user-list__message">{name}</p>
-          <FollowButton onClick={followClick}>follow</FollowButton>
+          <p style={{ color: "#d7d7d7" }}> | </p>
+          <Button
+            onClick={() => followClick(users)}
+            sx={{
+              width: "160px",
+              border: "1px solid #fff",
+              borderRadius: "20px",
+              color: "#fff",
+              ml: "30px",
+              fontSize: "11px",
+              fontWeight: "bold",
+            }}
+          >
+            follow
+          </Button>
         </div>
       )}
     </ListContainer>

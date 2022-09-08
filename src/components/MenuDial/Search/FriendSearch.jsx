@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-
-import { ResultsDropdown } from ".";
-import { SearchIcon } from "../assets";
+import { SearchIcon } from "../../../assets";
+import ResultsDropdown from "./ResultsDropdown";
 
 const FriendSearch = () => {
   const [query, setQuery] = useState("");

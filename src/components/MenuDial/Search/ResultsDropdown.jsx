@@ -1,5 +1,5 @@
 import React from "react";
-import FriendSearchList from "./UserList";
+import FriendSearchList from "./FriendSearchList";
 
 const ResultsDropdown = ({ query, loading }) => {
   return (

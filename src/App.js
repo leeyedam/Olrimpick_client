@@ -1,33 +1,24 @@
 import React from "react";
-import { StreamChat } from "stream-chat";
 import Cookies from "universal-cookie";
 
 import { Auth } from "./components";
-import { connect } from "getstream";
 
 import "stream-chat-react/dist/css/index.css";
 import "./App.css";
-import MainFeed from "./components/MainFeed";
-
-import FriendListContainer from "./components/FriendListContainer";
+import MainFeedContainer from "./containers/MainFeedContainer";
+import chatClient from "./chatClient";
 
 const cookies = new Cookies();
-
-const apiKey = "adazxgkkh3hb";
 const authToken = cookies.get("token");
-// const userId = cookies.get("userId");
-const client = connect(apiKey, authToken, "1201640");
-const clientChat = StreamChat.getInstance(apiKey);
 
 if (authToken) {
-  clientChat.connectUser(
+  chatClient.connectUser(
     {
       id: cookies.get("userId"),
       name: cookies.get("username"),
       fullName: cookies.get("fullName"),
       image: cookies.get("avatarURL"),
       hashedPassword: cookies.get("hashedPassword"),
-      phoneNumber: cookies.get("phoneNumber"),
     },
     authToken
   );
@@ -38,8 +29,7 @@ const App = () => {
 
   return (
     <div className="app__wrapper">
-      <FriendListContainer />
-      <MainFeed />
+      <MainFeedContainer />
     </div>
   );
 };

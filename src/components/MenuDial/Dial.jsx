@@ -7,22 +7,17 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearhchModal from "./SearhchModal";
+import SearhchModal from "./Search/SearhchModal";
 import AboutApp from "./AboutApp";
-import Following from "./Following";
-import Follower from "./Follower";
 import Cookies from "universal-cookie";
 import IdModal from "./IdModal";
+import FollowerContainer from "../../containers/FollowerContainer";
+import FollowingContainer from "../../containers/FollowingContainer";
 
 const cookies = new Cookies();
 const userId = cookies.get("userId");
 
-export default function Dial({
-  followerList,
-  followList,
-  unfollow,
-  following,
-}) {
+export default function Dial() {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -74,17 +69,12 @@ export default function Dial({
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton>
-              <Following followList={followList} unfollow={unfollow} />
+              <FollowingContainer />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton>
-              <Follower
-                followerList={followerList}
-                following={following}
-                unfollow={unfollow}
-                followList={followList}
-              />
+              <FollowerContainer />
             </ListItemButton>
           </ListItem>
         </>
@@ -117,6 +107,8 @@ export default function Dial({
     </Box>
   );
 
+  const rand1 = Math.random();
+
   return (
     <div>
       {
@@ -125,7 +117,19 @@ export default function Dial({
             onClick={toggleDrawer(anchor, true)}
             sx={{ justifyContent: "left" }}
           >
-            <MenuIcon />
+            <svg width={0} height={0}>
+              <linearGradient
+                id={`linearColors-${rand1}`}
+                x1={0}
+                y1={1}
+                x2={1}
+                y2={1}
+              >
+                <stop offset={0} stopColor=" rgba(234, 110, 110, 1)" />
+                <stop offset={1} stopColor="rgba(147, 117, 254, 1)" />
+              </linearGradient>
+            </svg>
+            <MenuIcon sx={{ fill: `url(#linearColors-${rand1})` }} />
           </Button>
           <Drawer
             anchor={anchor}

@@ -1,29 +1,32 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import { Avatar, createTheme, ThemeProvider } from "@mui/material";
+import {
+  createTheme,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  ThemeProvider,
+} from "@mui/material";
+import useFollowing from "../../hooks/useFollowing";
+import useUnfollow from "../../hooks/useUnfollow";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Follower({
-  followerList,
-  following,
-  unfollow,
-  followList,
-}) {
+export default function Follower({ followerList, followList }) {
   const [open, setOpen] = React.useState(false);
+  const following = useFollowing;
+  const unfollow = useUnfollow;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,6 +35,7 @@ export default function Follower({
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <div>
       <Button
@@ -96,54 +100,59 @@ export default function Follower({
                   marginLeft: "17px",
                 }}
               >
-                <Avatar
-                  sx={{ width: 36, height: 36, marginRight: "1.5rem" }}
-                  src="/broken-image.jpg"
-                />
-                <ListItem sx={{ width: 160 }}>
-                  <ListItemText
-                    primary={arr[1]}
-                    sx={{ color: "#fff", fontWeight: "bold" }}
-                  />
-                </ListItem>
-                <Divider />
-                {followList.filter((user) => user[0] === arr[0]).length ? (
-                  <ListItem
-                    button
-                    sx={{
-                      width: 130,
-                      textAlign: "left",
-                      color: "#fff",
-                      fontWeight: "bold",
-                    }}
-                    onClick={() => {
-                      unfollow(arr[0]);
-                    }}
-                  >
-                    <ListItemText
-                      primary="Unfollow"
-                      sx={{ color: "#fff", fontWeight: "bold" }}
-                    />
-                  </ListItem>
-                ) : (
-                  <ListItem
-                    button
-                    sx={{
-                      width: 130,
-                      textAlign: "left",
-                      color: "#fff",
-                      fontWeight: "bold",
-                    }}
-                    onClick={() => {
-                      following(arr[0]);
-                    }}
-                  >
-                    <ListItemText
-                      primary="Follow"
-                      sx={{ color: "#fff", fontWeight: "bold" }}
-                    />
-                  </ListItem>
-                )}
+                <Table
+                  sx={{ minWidth: 370, maxWidth: 700 }}
+                  aria-label="custom pagination table"
+                >
+                  <TableBody>
+                    <TableRow>
+                      <TableCell
+                        sx={{ width: "15%", padding: "16px 0 16px 20px" }}
+                      >
+                        <span
+                          style={{
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {arr[1]}
+                        </span>
+                      </TableCell>
+                      {followList.filter((user) => user[0] === arr[0])
+                        .length ? (
+                        <TableCell sx={{ width: "1%", padding: 0 }}>
+                          <Button
+                            size="medium"
+                            style={{
+                              fontWeight: "bold",
+                              marginLeft: "7px",
+                              marginRight: "10px",
+                              fontSize: ".7rem",
+                              color: "#ea6e6e",
+                            }}
+                            onClick={() => unfollow(arr[0], i)}
+                          >
+                            Unfollow
+                          </Button>
+                        </TableCell>
+                      ) : (
+                        <TableCell sx={{ width: "1%", padding: 0 }}>
+                          <Button
+                            size="medium"
+                            style={{
+                              fontWeight: "bold",
+                              marginLeft: "7px",
+                              marginRight: "10px",
+                              fontSize: ".7rem",
+                            }}
+                            onClick={() => following(arr[0], i)}
+                          >
+                            Follow
+                          </Button>
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  </TableBody>
+                </Table>
               </div>
             ))}
           </List>

@@ -3,12 +3,8 @@ import {
   StreamApp,
   NotificationFeed,
   AttachedActivity,
-  useFeedContext,
-  useStreamContext,
 } from "react-activity-feed";
-import Cookies from "universal-cookie";
 import "react-activity-feed/dist/index.css";
-import { connect } from "getstream";
 import {
   Button,
   Dialog,
@@ -17,21 +13,11 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-
-const cookies = new Cookies();
-const authToken = cookies.get("token");
-const userId = cookies.get("userId");
-
-const apiKey = "adazxgkkh3hb";
-const appId = "1201640";
-const location = "singapore";
+import useFeedClient from "../hooks/useFeedClient";
 
 function AlertFeed({ followList }) {
-  // const client = connect(apiKey, authToken, location);
-  // const feed = useFeedContext();
-  const { client } = useStreamContext();
-
-  const user = client.feed("notification", userId);
+  const client = useFeedClient();
+  const user = client.feed("notification", client.userId);
 
   const [openModal, setOpenModal] = React.useState(false);
   const [openAlertModal, setOpenAlertModal] = React.useState(false);
@@ -59,25 +45,29 @@ function AlertFeed({ followList }) {
     try {
       client.reactions.add(
         "follow",
-        userId,
+        client.userId,
         {},
         { targetFeeds: [`notification:${follower}`] }
       );
 
-      const myFeed = client.feed("user", userId, authToken);
+      const myFeed = client.feed("user", client.userId, client.userToken);
       myFeed.follow("user", follower);
 
       await myFeed.following({ filter: [`user:${follower}`] });
 
       window.location.reload();
     } catch (err) {
-      alert("이미 팔로우한 상태입니다.");
+      console.log(err);
     }
   };
 
   return (
     <div style={{ width: "100vw", margin: "0 auto" }}>
-      <StreamApp apiKey={apiKey} appId={appId} token={authToken}>
+      <StreamApp
+        apiKey={client.apiKey}
+        appId={client.appId}
+        token={client.userToken}
+      >
         <NotificationFeed
           Group={(props) => (
             <>
