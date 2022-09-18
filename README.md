@@ -9,12 +9,12 @@
 
 ## 기술스택
 
-### `React` / `Redux` / `Redux-thunk` / `Stream` /\
+### `React` / `Redux` / `Redux-thunk` / `Stream` /
 
 ### `Styled-components` / `MUI` / `Universal-cookie`
 
 ## 배포
 
-### `Backend`
+### `Backend : Heroku`
 
-### `Frontend`
+### `Frontend : Netlify`
