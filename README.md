@@ -3,7 +3,7 @@
 https://olrimpick.netlify.app/
 
 ## 둘러보기용 ID / PW
-ID:yedam / PW:123123
+ID:yedam / PW:123123\
 *Signup이 아닌 Login으로 들어가주세요!
 
 ## 앱소개
