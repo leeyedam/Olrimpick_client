@@ -1,3 +1,10 @@
+##웹사이트 바로가기
+https://olrimpick.netlify.app/
+
+#둘러보기용 ID / PW
+ID:yedam / PW:123123
+*Signup이 아닌 Login으로 들어가주세요!
+
 ## 앱소개
 
 코로나로 인해 자주 못 만나고, 바쁜 일상 때문에 안부 묻기가 혹시
