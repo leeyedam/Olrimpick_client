@@ -1,6 +1,5 @@
 ## 웹사이트 바로가기
-
-https://olrimpick.netlify.app/
+[![올림픽](https://user-images.githubusercontent.com/93389233/230871269-b540c8bc-0318-4ecc-acfd-66192e0ca37e.png)](https://olrimpick.netlify.app/)
 
 ## 둘러보기용 ID / PW
 ID:user / PW:123123\
@@ -18,13 +17,10 @@ ID:user / PW:123123\
 확인하고 글이나 사진을 업로드하는 사이트입니다.
 
 ## 기술스택
-
-### `React` / `Redux` / `Redux-thunk` / `Stream` /
-
-### `Styled-components` / `MUI` / `Universal-cookie`
+<img src="https://img.shields.io/badge/React-0088CC?style=flat&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/Redux-764ABC?style=flat&logo=Redux&logoColor=white"/> <img src="https://img.shields.io/badge/ReduxThunk-764ABC?style=flat&logo=Redux&logoColor=white"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/Styledcomponents-DB7093?style=flat&logo=styledcomponents&logoColor=white"/> <img src="https://img.shields.io/badge/Mui-007FFF?style=flat&logo=mui&logoColor=white"/>
 
 ## 배포
 
-### `Backend : Heroku`
+### `Backend : Qoddi`
 
 ### `Frontend : Netlify`
